@@ -1,0 +1,163 @@
+/* ==========================================================================
+   FacturAI Colombia – Tokens de Diseño "Apple, pero contable"
+   Inspiración: macOS / iPadOS Finanzas, Notas y Ajustes.
+   ========================================================================== */
+
+:root {
+  /* Tipografía del sistema Apple */
+  --font-system: system-ui, -apple-system, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Escala tipográfica y tracking */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.01em;
+  --tracking-caps: 0.04em;
+
+  --leading-title: 1.1;
+  --leading-body: 1.5;
+  --leading-table: 1.35;
+
+  /* Radios de curvatura continua (squircle aproximado) */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-full: 9999px;
+
+  /* ------------------------------------------------------------------------
+     Tema Oscuro (Predeterminado - Obsidian & Gold Luxury)
+     ------------------------------------------------------------------------ */
+  --bg: #08080a;
+  --bg-subtle: #0d0e12;
+
+  /* Superficies en capas */
+  --surface: rgba(22, 27, 36, 0.72);
+  --surface-opaque: #161b24;
+  --surface-raised: rgba(30, 36, 48, 0.85);
+  --surface-raised-opaque: #1d232f;
+  --surface-sunken: rgba(10, 13, 18, 0.65);
+  --surface-hover: rgba(255, 255, 255, 0.04);
+  --surface-active: rgba(255, 255, 255, 0.07);
+
+  /* Barras translúcidas con luz en el borde */
+  --glass-bg: rgba(16, 20, 28, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+
+  /* Bordes hairline */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(255, 255, 255, 0.18);
+
+  /* Tipografía */
+  --text: #f5f6f8;
+  --text-secondary: #a1a7b4;
+  --text-muted: #6e7687;
+  --text-tertiary: #4d5565;
+
+  /* Color de Acento Único (Apple System Blue) */
+  --accent: #0a84ff;
+  --accent-hover: #0071e3;
+  --accent-active: #0058b6;
+  --accent-subtle: rgba(10, 132, 255, 0.14);
+  --accent-border: rgba(10, 132, 255, 0.35);
+  --accent-contrast: #ffffff;
+
+  /* Semántica Financiera */
+  --positive: #30d158;
+  --positive-surface: rgba(48, 209, 88, 0.12);
+  --positive-border: rgba(48, 209, 88, 0.3);
+  --positive-text: #6ce086;
+
+  --negative: #ff453a;
+  --negative-surface: rgba(255, 69, 58, 0.12);
+  --negative-border: rgba(255, 69, 58, 0.3);
+  --negative-text: #ff857f;
+
+  --warning: #ff9f0a;
+  --warning-surface: rgba(255, 159, 10, 0.12);
+  --warning-border: rgba(255, 159, 10, 0.3);
+  --warning-text: #ffbe53;
+
+  /* Dorado Elegante (Champagne Gold para Planes Premium y Certificaciones) */
+  --gold: #d4af37;
+  --gold-light: #e5c158;
+  --gold-surface: rgba(212, 175, 55, 0.12);
+  --gold-border: rgba(212, 175, 55, 0.38);
+  --gold-text: #f0cb64;
+
+  /* Sombras Apple de dos capas */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-raised: 0 12px 32px -4px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-dock: 0 20px 48px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border);
+
+  /* Enfoque accesible estilo Apple */
+  --focus-ring: 0 0 0 3px rgba(10, 132, 255, 0.35);
+}
+
+/* Modo claro selectivo para clientes que configuran prefers-color-scheme */
+@media (prefers-color-scheme: light) {
+  :root[data-theme="system"],
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f6f8;
+    --bg-subtle: #eceef2;
+
+    --surface: rgba(255, 255, 255, 0.85);
+    --surface-opaque: #ffffff;
+    --surface-raised: rgba(255, 255, 255, 0.95);
+    --surface-raised-opaque: #ffffff;
+    --surface-sunken: rgba(235, 238, 243, 0.7);
+    --surface-hover: rgba(0, 0, 0, 0.03);
+    --surface-active: rgba(0, 0, 0, 0.06);
+
+    --glass-bg: rgba(245, 246, 248, 0.82);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.8);
+
+    --border: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.04);
+    --border-hover: rgba(0, 0, 0, 0.16);
+
+    --text: #11141a;
+    --text-secondary: #5a6272;
+    --text-muted: #8b93a4;
+    --text-tertiary: #b0b7c5;
+
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --accent-active: #005bb5;
+    --accent-subtle: rgba(0, 113, 227, 0.1);
+    --accent-border: rgba(0, 113, 227, 0.28);
+    --accent-contrast: #ffffff;
+
+    --positive: #248a3d;
+    --positive-surface: rgba(36, 138, 61, 0.1);
+    --positive-border: rgba(36, 138, 61, 0.24);
+    --positive-text: #1e7433;
+
+    --negative: #d70015;
+    --negative-surface: rgba(215, 0, 21, 0.08);
+    --negative-border: rgba(215, 0, 21, 0.2);
+    --negative-text: #b30012;
+
+    --warning: #b25000;
+    --warning-surface: rgba(178, 80, 0, 0.09);
+    --warning-border: rgba(178, 80, 0, 0.22);
+    --warning-text: #964300;
+
+    --gold: #b38914;
+    --gold-light: #d4af37;
+    --gold-surface: rgba(212, 175, 55, 0.14);
+    --gold-border: rgba(212, 175, 55, 0.45);
+    --gold-text: #8c6a08;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+    --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-raised: 0 16px 36px -6px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+    --shadow-dock: 0 20px 40px -8px rgba(0, 0, 0, 0.16), 0 0 0 1px var(--border);
+
+    --focus-ring: 0 0 0 3px rgba(0, 113, 227, 0.28);
+  }
+}

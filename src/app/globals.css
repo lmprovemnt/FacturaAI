@@ -1,0 +1,353 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/motion.css";
+
+/* ==========================================================================
+   FacturAI Colombia – Sistema de Diseño Unificado: "Apple, pero contable"
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-system);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-system);
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Telón de fondo Obsidian & Gold Luxury con gradiente radial y micro-malla */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 113, 227, 0.15), rgba(212, 175, 55, 0.05), transparent 100%),
+    radial-gradient(circle 500px at 85% 20%, rgba(212, 175, 55, 0.03), transparent 70%),
+    radial-gradient(circle 600px at 15% 60%, rgba(0, 113, 227, 0.04), transparent 70%),
+    #08080a;
+}
+
+/* Micro-malla técnica tenue con opacidad 3% */
+.app-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Bento Grid Luxury & Materiales
+   -------------------------------------------------------------------------- */
+.bento-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 20px 0 rgba(0, 113, 227, 0.07);
+}
+
+.bento-card-gold {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(212, 175, 55, 0.15);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card-gold:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 25px 0 rgba(212, 175, 55, 0.16);
+}
+
+.metallic-text {
+  background: linear-gradient(180deg, #ffffff 0%, #e4e4e7 55%, #71717a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-metallic-text {
+  background: linear-gradient(180deg, #fef9c3 0%, #d4af37 60%, #996515 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animación de borde iluminado perimetral para dropzone activo */
+@keyframes borderGlowPulse {
+  0%, 100% {
+    border-color: rgba(0, 113, 227, 0.6);
+    box-shadow: 0 0 20px rgba(0, 113, 227, 0.25), inset 0 0 15px rgba(0, 113, 227, 0.1);
+  }
+  50% {
+    border-color: rgba(212, 175, 55, 0.7);
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.3), inset 0 0 18px rgba(212, 175, 55, 0.15);
+  }
+}
+
+.dropzone-active-glow {
+  animation: borderGlowPulse 2.4s ease-in-out infinite;
+}
+.apple-glass-nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: inset 0 -0.5px 0 0 var(--glass-highlight);
+}
+
+.apple-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.apple-card-raised {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+}
+
+.apple-dock {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--border);
+  box-shadow: var(--shadow-dock);
+}
+
+/* --------------------------------------------------------------------------
+   Tipografía Financiera y Jerarquía Apple
+   -------------------------------------------------------------------------- */
+.large-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+  color: var(--text);
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   Controles: Botones e Inputs Estilo Apple
+   -------------------------------------------------------------------------- */
+.apple-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: background-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.apple-btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.apple-btn-primary:active:not(:disabled) {
+  background: var(--accent-active);
+  transform: scale(0.975);
+}
+
+.apple-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.apple-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface-hover);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  transition: background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.apple-btn-secondary:hover:not(:disabled) {
+  background: var(--surface-active);
+  border-color: var(--border-hover);
+}
+
+.apple-btn-secondary:active:not(:disabled) {
+  transform: scale(0.975);
+}
+
+.apple-btn-tint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-subtle);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-border);
+  transition: background-color var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.apple-btn-tint:hover {
+  background: rgba(10, 132, 255, 0.22);
+}
+
+.apple-btn-tint:active {
+  transform: scale(0.97);
+}
+
+/* Campos de entrada con foco en anillo suave */
+.apple-field {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  font-family: var(--font-system);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.apple-field:hover {
+  border-color: var(--border-hover);
+}
+
+.apple-field:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+
+.apple-field[data-edited="true"] {
+  border-color: var(--warning-border);
+  box-shadow: 0 0 0 2px var(--warning-surface);
+}
+
+/* --------------------------------------------------------------------------
+   Densidad Contable: Tabla Compacta (36-40px) con Separadores Hairline
+   -------------------------------------------------------------------------- */
+.accounting-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  line-height: var(--leading-table);
+}
+
+.accounting-table th {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.accounting-table td {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid var(--border-subtle);
+  height: 38px;
+}
+
+.accounting-table tr:hover td {
+  background: var(--surface-hover);
+}
+
+/* Quitar spinners nativos */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Preferencias de accesibilidad del sistema */
+@media (prefers-reduced-transparency: reduce) {
+  .apple-glass-nav,
+  .apple-card,
+  .apple-card-raised,
+  .apple-dock {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--surface-opaque) !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: rgba(255, 255, 255, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.2);
+    --text-muted: #d0d4dc;
+  }
+}

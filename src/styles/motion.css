@@ -1,0 +1,194 @@
+/* ==========================================================================
+   FacturAI Colombia – Firma de Movimiento: "Asentar"
+   Coreografías contables, amortiguamiento crítico y compuerta de frecuencia.
+   ========================================================================== */
+
+:root {
+  /* Curvas de aceleración calibradas */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  --spring-settle: cubic-bezier(0.16, 1, 0.3, 1); /* Aproximación damping 1.0, response 0.35 */
+
+  /* Duraciones base (UI < 300ms) */
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 260ms;
+  --dur-sheet: 320ms;
+}
+
+/* --------------------------------------------------------------------------
+   1. MOTIVO: ASENTAR (Entrada que toma peso y se fija)
+   Sube 8px, escala de 0.98 a 1, opacidad 0 a 1, sin rebote.
+   -------------------------------------------------------------------------- */
+@keyframes asentar {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.motion-asentar {
+  animation: asentar var(--dur-slow) var(--spring-settle) forwards;
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   2. MOTIVO: TINTA (Trazo hairline continuo)
+   scaleX con transform-origin izquierdo.
+   -------------------------------------------------------------------------- */
+@keyframes tinta-draw {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.motion-tinta {
+  transform-origin: left center;
+  animation: tinta-draw var(--dur-slow) var(--ease-out) forwards;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   3. MOTIVO: BALANCE (Micro-inclinación y nivelación contable)
+   La balanza se inclina hasta 1.8° ante descuadre y se nivela a 0° al cuadrar.
+   -------------------------------------------------------------------------- */
+.motion-balance-scale {
+  transform-origin: center center;
+  transition: transform var(--dur-slow) var(--spring-settle),
+              color var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+  will-change: transform;
+}
+
+.motion-balance-scale[data-status="unbalanced"] {
+  transform: rotate(-1.8deg);
+}
+
+.motion-balance-scale[data-status="balanced"] {
+  transform: rotate(0deg);
+}
+
+/* --------------------------------------------------------------------------
+   4. MOTIVO: CASCADA (Stagger secuencial en orden de lectura - máx 8)
+   -------------------------------------------------------------------------- */
+.motion-cascada-1 { animation-delay: 40ms; }
+.motion-cascada-2 { animation-delay: 80ms; }
+.motion-cascada-3 { animation-delay: 120ms; }
+.motion-cascada-4 { animation-delay: 160ms; }
+.motion-cascada-5 { animation-delay: 200ms; }
+.motion-cascada-6 { animation-delay: 240ms; }
+.motion-cascada-7 { animation-delay: 280ms; }
+.motion-cascada-8 { animation-delay: 320ms; }
+
+/* --------------------------------------------------------------------------
+   Micro-interacciones táctiles (Pointer-down feedback con scale 0.97)
+   -------------------------------------------------------------------------- */
+.motion-pressable {
+  transition: transform var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-pressable:hover {
+    transform: translateY(-0.5px);
+  }
+}
+
+.motion-pressable:active {
+  transform: scale(0.975);
+}
+
+/* --------------------------------------------------------------------------
+   Shimmer por GPU Transform (Nunca background-position)
+   -------------------------------------------------------------------------- */
+@keyframes shimmer-gpu {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-track {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-bar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  animation: shimmer-gpu 1.8s var(--ease-in-out) infinite;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Checkmark Tinta con stroke-dashoffset (Unico momento de delight al cuadrar)
+   -------------------------------------------------------------------------- */
+@keyframes stroke-check {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.svg-check-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: stroke-check 360ms var(--ease-out) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Compuerta de Frecuencia: NO animar celdas activas, typing ni filtros
+   -------------------------------------------------------------------------- */
+input, textarea, select {
+  transition: border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+/* --------------------------------------------------------------------------
+   Accesibilidad: prefers-reduced-motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-balance-scale,
+  .motion-balance-scale[data-status="unbalanced"] {
+    transform: none !important;
+  }
+
+  .motion-asentar {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
